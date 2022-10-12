@@ -17,7 +17,7 @@ class CaptchasController extends Controller
 
         $captcha = $captchaBuilder->setDistortion('enable')->build();
         $expiredAt = now()->addMinutes(2);
-        \Cache::put($cacheKey, ['phone' => $phone, 'code' => $captcha->getPhrase()], $expiredAt);
+        \Cache::put($cacheKey, ['phone' => $phone, 'code' => $captcha->getPhrase(), 'expiredAt'=> $expiredAt->toDateTimeString()], $expiredAt);
 
         $result = [
             'captcha_key' => $key,
