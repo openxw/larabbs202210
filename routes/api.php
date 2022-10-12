@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\VerificationCodesController;
 use App\Http\Controllers\Api\UsersController;
+use App\Http\Controllers\Api\CaptchasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthorizationsController;
@@ -27,6 +28,10 @@ Route::prefix('v1')
 
         Route::middleware('throttle:'. config('api.rate_limits.sign'))
             ->group(function (){
+                // 图片验证码
+                Route::post('captchas', [CaptchasController::class, 'store'])
+                    ->name('captchas.store');
+
                 //短信验证码
                 Route::post('verificationCodes', [VerificationCodesController::class, 'store'])
                     ->name('verificationCodes.store');
