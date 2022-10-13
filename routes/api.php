@@ -26,6 +26,10 @@ Route::prefix('v1')
     ->name('api.v1')
     ->group(function (){
 
+        Route::get('/', function (){
+            return "已认证账户";
+        });
+
         Route::middleware('throttle:'. config('api.rate_limits.sign'))
             ->group(function (){
                 // 图片验证码
