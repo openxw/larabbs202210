@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\VerificationCodesController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\CaptchasController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthorizationsController;
@@ -26,10 +27,6 @@ Route::prefix('v1')
     ->name('api.v1')
     ->group(function (){
 
-        Route::get('/', function (){
-            return "已认证账户";
-        });
-
         Route::middleware('throttle:'. config('api.rate_limits.sign'))
             ->group(function (){
                 // 图片验证码
@@ -48,6 +45,13 @@ Route::prefix('v1')
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
 
+                Route::get('users/{user}', [UsersController::class, 'show'])
+                    ->name('users.show');
+
+                Route::middleware('auth:api')->group(function (){
+                    Route::get('user', [UsersController::class, 'me'])
+                        ->name('user.show');
+                });
             });
 
 
