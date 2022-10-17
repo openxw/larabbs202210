@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ImagesController;
 use App\Http\Controllers\Api\VerificationCodesController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\CaptchasController;
@@ -19,9 +20,9 @@ use App\Http\Controllers\Api\AuthorizationsController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 Route::prefix('v1')
     ->name('api.v1')
@@ -48,9 +49,18 @@ Route::prefix('v1')
                 Route::get('users/{user}', [UsersController::class, 'show'])
                     ->name('users.show');
 
+                // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function (){
+                    // 当前登录用户信息
                     Route::get('user', [UsersController::class, 'me'])
                         ->name('user.show');
+                    // 编辑登录用户信息
+                    Route::patch('user', [UsersController::class, 'update'])
+                        ->name('user.update');
+                     // 上传图片
+                    Route::post('images', [ImagesController::class, 'store'])
+                        ->name('images.store');
+
                 });
             });
 
@@ -59,7 +69,6 @@ Route::prefix('v1')
         Route::post('socials/{social_type}/authorizations',[AuthorizationsController::class, 'socialStore'])
             ->where('social_type', 'wechat')
             ->name('social.authorizations.store');
-
         //登录
         Route::post('authorizations', [AuthorizationsController::class, 'store'])
             ->name('authorizations.store');
