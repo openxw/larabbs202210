@@ -23,7 +23,8 @@ class AuthorizationsController extends Controller
         if (!$token = \Auth::guard('api')->attempt($credentials)) {
             throw new AuthenticationException('用户名或密码错');
         }
-
+        cookie('jwt-token', $token,120);
+//        \Cache::put('jwt-token', $token, now()->addMinutes(120));
         return $this->respondWithToken($token)->setStatusCode(201);
     }
 
