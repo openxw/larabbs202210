@@ -47,16 +47,17 @@ Route::prefix('v1')
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
                 // 游客可以访问的接口
-                // 话题列表，详情
-                Route::apiResource('topics', TopicsController::class)->only([
-                    'index', 'show'
-                ]);
+
                 // 分类列表
                 Route::apiResource('categories', CategoriesController::class)
                     ->only('index');
                 // 某个用户的详情
                 Route::get('users/{user}', [UsersController::class, 'show'])
                     ->name('users.show');
+                // 话题列表，详情
+                Route::apiResource('topics', TopicsController::class)->only([
+                    'index', 'show'
+                ]);
 
 
                 // 登录后可以访问的接口
