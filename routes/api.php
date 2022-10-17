@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ImagesController;
+use App\Http\Controllers\Api\TopicsController;
 use App\Http\Controllers\Api\VerificationCodesController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\CaptchasController;
@@ -38,7 +39,6 @@ Route::prefix('v1')
                 //短信验证码
                 Route::post('verificationCodes', [VerificationCodesController::class, 'store'])
                     ->name('verificationCodes.store');
-
                 //用户注册
                 Route::post('users', [UsersController::class, 'store'])
                     ->name('users.store');
@@ -47,6 +47,10 @@ Route::prefix('v1')
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
                 // 游客可以访问的接口
+                // 话题列表，详情
+                Route::apiResource('topics', TopicsController::class)->only([
+                    'index', 'show'
+                ]);
                 // 分类列表
                 Route::apiResource('categories', CategoriesController::class)
                     ->only('index');
@@ -66,6 +70,10 @@ Route::prefix('v1')
                      // 上传图片
                     Route::post('images', [ImagesController::class, 'store'])
                         ->name('images.store');
+                    // 发布，修改，删除话题
+                    Route::apiResource('topics', TopicsController::class)->only([
+                        'store', 'update', 'destroy'
+                    ]);
 
                 });
             });
