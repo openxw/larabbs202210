@@ -75,6 +75,9 @@ Route::prefix('v1')
                 Route::apiResource('links', LinksController::class)->only([
                     'index'
                 ]);
+                // 活跃用户
+                Route::get('actived/users', [UsersController::class, 'activedIndex'])
+                    ->name('actived.users.index');
 
 
                 // 登录后可以访问的接口
