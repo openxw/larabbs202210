@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\VerificationCodesController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\CaptchasController;
 use App\Http\Controllers\Api\RepliesController;
+use App\Http\Controllers\Api\NotificationsController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -90,6 +91,9 @@ Route::prefix('v1')
                         ->only([
                             'store','destroy'
                         ]);
+                    //通知列表
+                    Route::apiResource('notifications',NotificationsController::class)
+                        ->only('index');
 
                 });
             });
