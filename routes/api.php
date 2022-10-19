@@ -62,6 +62,12 @@ Route::prefix('v1')
                 //某个用户发布的话题
                 Route::get('user/{user}/topic',[TopicsController::class,'userIndex'])
                     ->name('user.topics.index');
+                //话题回复列表
+                Route::apiResource('topics.replies', RepliesController::class)
+                    ->only(['index']);
+                //某个用户的回复列表
+                Route::get('user/{user}/replies',[RepliesController::class, 'userIndex'])
+                    ->name('users.replies.index');
 
 
                 // 登录后可以访问的接口

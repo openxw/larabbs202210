@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Queries\ReplyQuery;
 use App\Models\Topic;
 use App\Models\Reply;
 use Illuminate\Http\Request;
@@ -31,4 +32,17 @@ class RepliesController extends Controller
 
         return response(null,204);
     }
+
+    public function index($topicid, ReplyQuery $query)
+    {
+        $replies = $query->where('topic_id',$topicid)->paginate();
+        return ReplyResource::collection($replies);
+    }
+
+    public function userIndex($userId, ReplyQuery $query)
+    {
+        $replies = $query->where('user_id',$userId)->paginate();
+        return ReplyResource::collection($replies);
+    }
+
 }
