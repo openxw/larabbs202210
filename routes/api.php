@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\TopicsController;
 use App\Http\Controllers\Api\VerificationCodesController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\CaptchasController;
+use App\Http\Controllers\Api\RepliesController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -78,6 +79,11 @@ Route::prefix('v1')
                     Route::apiResource('topics', TopicsController::class)->only([
                         'store', 'update', 'destroy'
                     ]);
+                    //发布,删除回复
+                    Route::apiResource('topics.replies',RepliesController::class)
+                        ->only([
+                            'store','destroy'
+                        ]);
 
                 });
             });
