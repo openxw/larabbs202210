@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CaptchasController;
 use App\Http\Controllers\Api\RepliesController;
 use App\Http\Controllers\Api\NotificationsController;
 use App\Http\Controllers\Api\PermissionsController;
+use App\Http\Controllers\Api\LinksController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,10 @@ Route::prefix('v1')
                 //某个用户的回复列表
                 Route::get('user/{user}/replies',[RepliesController::class, 'userIndex'])
                     ->name('users.replies.index');
+                // 资源推荐
+                Route::apiResource('links', LinksController::class)->only([
+                    'index'
+                ]);
 
 
                 // 登录后可以访问的接口
