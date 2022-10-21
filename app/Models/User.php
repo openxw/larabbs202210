@@ -9,11 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Support\Facades\Auth;
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable implements MustVerifyEmail, JWTSubject
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Traits\LastActivedAtHelper;
     use Traits\ActiveUserHelper;
